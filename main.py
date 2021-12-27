@@ -53,3 +53,10 @@ class DifferentRotation(Scene):
         )
 
         self.wait()
+
+class Section(Scene):
+    def construct(self):
+        self.next_section()
+        self.add(Circle())
+        self.wait()
+        self.next_section()
