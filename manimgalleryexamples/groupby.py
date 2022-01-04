@@ -1,4 +1,5 @@
 from manim import *
+from manim.utils.scale import LinearBase
 
 class Groupby(Scene):
     def construct(self):
@@ -49,4 +50,22 @@ class Groupby(Scene):
         self.play(Transform(justified, justified2))
         self.wait(2)
         self.play(Unwrite(justified, run_time=2), Uncreate(bigrectangle, run_time=3))
+        self.wait()
+        t2 = Table(
+            [["This", "is a"],
+            ["simple", "Table."]],
+            row_labels=[Text("R1"), Text("R2")],
+            col_labels=[Text("C1"), Text("C2")],
+            top_left_entry=Star().scale(0.3),
+            include_outer_lines=True,
+            arrange_in_grid_config={"cell_alignment": RIGHT})
+        print(t2.v_buff, t2.h_buff)
+        print(t2.get_cell((2,2)).width, t2.get_cell((2,2)).height)
+        print(t2.get_cell((2,2)).width, t2.get_cell((2,2)).height)
+        print(t2.v_buff, t2.h_buff)
+        t2.set(v_buff=t2.v_buff/2, h_buff=t2.h_buff/2)
+        self.play(t2.animate.set(v_buff=t2.v_buff/2, h_buff=t2.h_buff/2).scale(0.5))
+        print(t2.v_buff, t2.h_buff)
+        print(t2.get_cell((2,2)).width, t2.get_cell((2,2)).height)
+        t2.add(t2.get_cell((2,2), color=RED))
         self.wait()
