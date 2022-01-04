@@ -1,8 +1,17 @@
 from manim import *
-from manim.utils.scale import LinearBase
 
 class Groupby(Scene):
+    '''
+    Scene is inherited in this class. Will mainly use this for the Scene animation and shenanigans.
+    '''
     def construct(self):
+        '''
+        Animations are done here. Will see how it rolls later on.
+        todo
+        - add scene sections.
+        - carry on to the next stage
+        - write proper and clean code
+        '''
         t0 = Table(
                 [
                     ["FB", "Sarah", "350"],
@@ -50,4 +59,15 @@ class Groupby(Scene):
         self.play(Transform(justified, justified2))
         self.wait(2)
         self.play(Unwrite(justified, run_time=2), Uncreate(bigrectangle, run_time=3))
+        self.wait()
+        def table_column(table: Table, pos: int = 0) -> tuple:
+            lastrow = len(t0.get_columns()[pos])
+            edge_UL = table.get_cell((1, pos)).get_corner(UP+LEFT)
+            edge_UR = table.get_cell((1, pos)).get_corner(UP+RIGHT)
+            edge_DL = table.get_cell((lastrow, pos)).get_corner(DOWN+LEFT)
+            edge_DR = table.get_cell((lastrow, pos)).get_corner(DOWN+RIGHT)
+            return edge_UL, edge_UR, edge_DR, edge_DL
+        rec = Polygon(*table_column(t0, 2))
+        rec.set_opacity=1
+        self.add(rec)
         self.wait()
