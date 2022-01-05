@@ -11,6 +11,7 @@ class Groupby(Scene):
         - add scene sections.
         - carry on to the next stage
         - write proper and clean code
+        - figure out delayed simulataneous animations in the same self.play() function.
         '''
         t0 = Table(
                 [
@@ -42,7 +43,7 @@ class Groupby(Scene):
         self.play(Circumscribe(t0.get_columns()[1], Rectangle, run_time=3))
         self.play(Transform(code1, code2), code3.animate.scale(0.5).next_to(code2.get_center(), DOWN).shift(0.5*RIGHT))
         code4 = Code(code="groupby('Company')", background="rectangle", language="Python", font="Monospace").shift(5*RIGHT + 3*UP).scale(0.5)
-        self.play(Uncreate(code3), Transform(code2, code4))
+        self.play(Uncreate(code3, run_time=1), Transform(code2, code4, run_time=1))
         self.wait()
         bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
         self.play(DrawBorderThenFill(bigrectangle))
@@ -67,7 +68,26 @@ class Groupby(Scene):
             edge_DL = table.get_cell((lastrow, pos)).get_corner(DOWN+LEFT)
             edge_DR = table.get_cell((lastrow, pos)).get_corner(DOWN+RIGHT)
             return edge_UL, edge_UR, edge_DR, edge_DL
-        rec = Polygon(*table_column(t0, 2))
+        rec = Polygon(*table_column(t0, 2), stroke_width=10)
         rec.set_opacity=1
-        self.add(rec)
+        self.play(ShowPassingFlash(rec, run_time=3, time_width=3))
+        self.wait()
+        self.play(
+                t0.animate
+                .add_highlighted_cell((2,2), color=TEAL)
+                .add_highlighted_cell((5,2), color=TEAL)
+                .add_highlighted_cell((3,2), color=RED)
+                .add_highlighted_cell((7,2), color=RED)
+                .add_highlighted_cell((4,2), color=GOLD)
+                .add_highlighted_cell((6,2), color=GOLD)
+                )
+        self.wait()
+        grptxt3 = (
+                '<span font_family="monospace">First, the algorithm finds matching instances in the feature that we are grouping by.</span>'
+                )
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        justified3 = MarkupText(grptxt3).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle), Write(justified3))
+        self.wait(3)
+        self.play(FadeOut(bigrectangle, run_time=2), Unwrite(justified3, reverse=True))
         self.wait()
