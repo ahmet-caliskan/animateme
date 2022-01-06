@@ -143,3 +143,10 @@ class Groupby(Scene):
         self.play(Write(gtxt3))
         self.wait()
         self.play(Unwrite(gtxt1), Unwrite(gtxt2), Unwrite(gtxt3), Uncreate(brace), Uncreate(brace2), Uncreate(brace3))
+        self.wait()
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        grptxt5 = (
+                '<span font_family="monospace">Keep in mind that this newly created, grouped object is a lazy object.</span>'
+                )
+        justified5 = MarkupText(grptxt5).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.wait()
