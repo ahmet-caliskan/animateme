@@ -149,4 +149,67 @@ class Groupby(Scene):
                 '<span font_family="monospace">Keep in mind that this newly created, grouped object is a lazy object.</span>'
                 )
         justified5 = MarkupText(grptxt5).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        grptxt6 = (
+                '<span font_family="monospace">Meaning that no calculation is done until an aggregation function is invoked. However, you can also access the groups individually without any aggregation.</span>'
+                )
+        justified6 = MarkupText(grptxt6).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle), Write(justified5))
+        self.wait(3)
+        self.play(Transform(justified5, justified6))
+        self.wait(5)
+        grptxt7 = (
+                '<span font_family="monospace">Lets see how exactly aggregation works with groupby. We will take a look at different aggregation functions one by one.</span>'
+                )
+        justified7 = MarkupText(grptxt7).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(Transform(justified5, justified7))
+        self.wait(4)
+        self.play(FadeOut(bigrectangle, run_time=1), Unwrite(justified5, run_time=1))
+        self.wait(2)
+        code5 = Code(code="groupby('Company').mean()", background="rectangle", language="Python", font="Monospace").shift(5*RIGHT + 3*UP).scale(0.5)
+        self.play(Transform(code2, code5))
+        self.wait()
+        brace = BraceBetweenPoints(point1, point2, direction=[1., 0., 0.])
+        self.play(Create(brace))
+        self.wait()
+        mathoperation = MathTex(r"(350 + 243) / 2 = 296.5").next_to(brace.get_tip(), RIGHT)
+        self.play(Write(mathoperation))
+        self.wait()
+        brace2 = BraceBetweenPoints(point3, point4, direction=[1., 0., 0.])
+        self.play(Create(brace2))
+        self.wait()
+        mathoperation2 = MathTex(r"(200 + 120) / 2 = 160").next_to(brace2.get_tip(), RIGHT)
+        self.play(Write(mathoperation2))
+        self.wait()
+        brace3 = BraceBetweenPoints(point5, point6, direction=[1., 0., 0.])
+        self.play(Create(brace3))
+        mathoperation3 = MathTex(r"(124 + 340) / 2 = 232").next_to(brace3.get_tip(), RIGHT)
+        self.play(Write(mathoperation3))
+        self.wait()
+        mvg1 = VGroup(brace, brace2, brace3, mathoperation, mathoperation2, mathoperation3)
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        grptxt8 = (
+                        '<span font_family="monospace">Since mean() aggregation function only works on numerical values, and Sales is the only numerical column, the aggregated results will only include the Sales column, hence returning this:</span>'
+                )
+        justified8 = MarkupText(grptxt8).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle, run_time=1), Write(justified8, run_time=1))
+        self.wait(7)
+        self.play(FadeOut(bigrectangle, run_time=1), Unwrite(justified8, run_time=1))
+        self.wait()
+        t2 = Table(
+                [
+                    ["296.5"],
+                    ["160.0"],
+                    ["232.0"]
+                ],
+                row_labels=[Text("FB"), Text("GOOG"), Text("MSFT")],
+                col_labels=[Text('Sales')],
+                include_outer_lines=True
+                )
+        t2.scale(0.7).shift(4*RIGHT)
+        self.play(Transform(mvg1, t2))
+        self.wait(3)
+        self.play(Uncreate(mvg1))
+        self.wait()
+        code6 = Code(code="groupby('Company').sum()", background="rectangle", language="Python", font="Monospace").shift(5*RIGHT + 3*UP).scale(0.5)
+        self.play(Transform(code2, code6))
         self.wait()
