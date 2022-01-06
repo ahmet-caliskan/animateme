@@ -91,3 +91,55 @@ class Groupby(Scene):
         self.wait(3)
         self.play(FadeOut(bigrectangle, run_time=2), Unwrite(justified3, reverse=True))
         self.wait()
+        t1 = Table(
+                [
+                    ["FB", "Sarah", "350"],
+                    ["FB", "Carl", "243"],
+                    ["GOOG", "Sam", "200"],
+                    ["GOOG", "Charlie", "120"],
+                    ["MSFT", "Venessa", "124"],
+                    ["MSFT", "Amy", "340"],
+                ],
+                row_labels=[Text("0"), Text("1"), Text("2"), Text("3"), Text("4"), Text("5")],
+                col_labels=[Text('Company'), Text('Person'), Text('Sales')],
+                include_outer_lines=True
+                )
+        t1.scale(0.49)
+        t1.shift(4*LEFT)
+        t1.add_highlighted_cell((2, 2), color=TEAL).add_highlighted_cell((3, 2), color=TEAL).add_highlighted_cell((4, 2), color=RED).add_highlighted_cell((5, 2), color=RED).add_highlighted_cell((6, 2), color=GOLD).add_highlighted_cell((7, 2), color=GOLD)
+        self.play(Transform(t0, t1))
+        self.wait(2)
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        grptxt4 = (
+                '<span font_family="monospace">And then, it groups them together just like that.</span>'
+                )
+        justified4 = MarkupText(grptxt4).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle), Write(justified4))
+        self.wait(3)
+        self.play(FadeOut(bigrectangle, run_time=2), Unwrite(justified4, reverse=True))
+        self.wait()
+        point1 = t1.get_cell((2, 4)).get_corner(UP+RIGHT)
+        point2 = t1.get_cell((3, 4)).get_corner(DOWN+RIGHT)
+        brace = BraceBetweenPoints(point1, point2, direction=[1., 0., 0.])
+        self.play(Create(brace))
+        self.wait()
+        gtxt1 = MarkupText('Group1').next_to(brace.get_tip(), RIGHT)
+        self.play(Write(gtxt1))
+        self.wait()
+        point3 = t1.get_cell((3, 4)).get_corner(DOWN+RIGHT)
+        point4 = t1.get_cell((5, 4)).get_corner(DOWN+RIGHT)
+        brace2 = BraceBetweenPoints(point3, point4, direction=[1., 0., 0.])
+        self.play(Create(brace2))
+        self.wait()
+        gtxt2 = MarkupText('Group2').next_to(brace2.get_tip(), RIGHT)
+        self.play(Write(gtxt2))
+        self.wait()
+        point5 = t1.get_cell((5, 4)).get_corner(DOWN+RIGHT)
+        point6 = t1.get_cell((7, 4)).get_corner(DOWN+RIGHT)
+        brace3 = BraceBetweenPoints(point5, point6, direction=[1., 0., 0.])
+        self.play(Create(brace3))
+        self.wait()
+        gtxt3 = MarkupText('Group3').next_to(brace3.get_tip(), RIGHT)
+        self.play(Write(gtxt3))
+        self.wait()
+        self.play(Unwrite(gtxt1), Unwrite(gtxt2), Unwrite(gtxt3), Uncreate(brace), Uncreate(brace2), Uncreate(brace3))
