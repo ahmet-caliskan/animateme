@@ -167,6 +167,7 @@ class Groupby(Scene):
         self.wait(2)
         code5 = Code(code="groupby('Company').mean()", background="rectangle", language="Python", font="Monospace").shift(5*RIGHT + 3*UP).scale(0.5)
         self.play(Transform(code2, code5))
+        self.play(Indicate(code2))
         self.wait()
         brace = BraceBetweenPoints(point1, point2, direction=[1., 0., 0.])
         self.play(Create(brace))
@@ -207,9 +208,70 @@ class Groupby(Scene):
                 )
         t2.scale(0.7).shift(4*RIGHT)
         self.play(Transform(mvg1, t2))
-        self.wait(3)
+        self.wait(5)
         self.play(Uncreate(mvg1))
         self.wait()
         code6 = Code(code="groupby('Company').sum()", background="rectangle", language="Python", font="Monospace").shift(5*RIGHT + 3*UP).scale(0.5)
         self.play(Transform(code2, code6))
+        self.play(Indicate(code2))
+        self.wait()
+        brace = BraceBetweenPoints(point1, point2, direction=[1., 0., 0.])
+        self.play(Create(brace))
+        self.wait()
+        mathoperation = MathTex(r"350 + 243 = 593").next_to(brace.get_tip(), RIGHT)
+        self.play(Write(mathoperation))
+        self.wait()
+        brace2 = BraceBetweenPoints(point3, point4, direction=[1., 0., 0.])
+        self.play(Create(brace2))
+        self.wait()
+        mathoperation2 = MathTex(r"200 + 120 = 320").next_to(brace2.get_tip(), RIGHT)
+        self.play(Write(mathoperation2))
+        self.wait()
+        brace3 = BraceBetweenPoints(point5, point6, direction=[1., 0., 0.])
+        self.play(Create(brace3))
+        mathoperation3 = MathTex(r"124 + 340 = 464").next_to(brace3.get_tip(), RIGHT)
+        self.play(Write(mathoperation3))
+        self.wait()
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        grptxt9 = (
+                        '<span font_family="monospace">Again, since sum() aggregation function only works on numerical values, and Sales is the only numerical column, the aggregated results will only include the Sales column, hence returning this:</span>'
+                )
+        justified9 = MarkupText(grptxt9).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle, run_time=1), Write(justified9, run_time=1))
+        self.wait(7)
+        self.play(FadeOut(bigrectangle, run_time=1), Unwrite(justified9, run_time=1))
+        self.wait()
+        mvg1 = VGroup(brace, brace2, brace3, mathoperation, mathoperation2, mathoperation3)
+        t3 = Table(
+                [
+                    ["593"],
+                    ["320"],
+                    ["464"]
+                ],
+                row_labels=[Text("FB"), Text("GOOG"), Text("MSFT")],
+                col_labels=[Text('Sales')],
+                include_outer_lines=True
+                )
+        t3.scale(0.7).shift(4*RIGHT)
+        self.play(Transform(mvg1, t3))
+        self.wait(5)
+        self.play(Uncreate(mvg1))
+        self.wait()
+        code7 = Code(code="groupby('Company').count()", background="rectangle", language="Python", font="Monospace").shift(5*RIGHT + 3*UP).scale(0.5)
+        self.play(Transform(code2, code7))
+        self.play(Indicate(code2))
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        grptxt10 = (
+                        '<span font_family="monospace">count() aggregation function works both on numerical and categorical variables. Hence, the resulting table will include both Person (categorical) and Sales (numerical) columns.</span>'
+                )
+        justified10 = MarkupText(grptxt10).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        grptxt11 = (
+                        '<span font_family="monospace">The count() aggregation function will simply count the number of instances in each column, for each group:</span>'
+                )
+        justified11 = MarkupText(grptxt11).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle, run_time=1), Write(justified10, run_time=1))
+        self.wait(7)
+        self.play(Transform(justified10, justified11))
+        self.wait(5)
+        self.play(FadeOut(bigrectangle, run_time=1), Unwrite(justified10, run_time=1))
         self.wait()
