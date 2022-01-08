@@ -275,3 +275,90 @@ class Groupby(Scene):
         self.wait(5)
         self.play(FadeOut(bigrectangle, run_time=1), Unwrite(justified10, run_time=1))
         self.wait()
+        brace = BraceBetweenPoints(point1, point2, direction=[1., 0., 0.])
+        self.play(Create(brace))
+        self.wait()
+        mathoperation = MathTex(r"2").next_to(brace.get_tip(), RIGHT)
+        self.play(Write(mathoperation))
+        self.wait()
+        brace2 = BraceBetweenPoints(point3, point4, direction=[1., 0., 0.])
+        self.play(Create(brace2))
+        self.wait()
+        mathoperation2 = MathTex(r"2").next_to(brace2.get_tip(), RIGHT)
+        self.play(Write(mathoperation2))
+        self.wait()
+        brace3 = BraceBetweenPoints(point5, point6, direction=[1., 0., 0.])
+        self.play(Create(brace3))
+        mathoperation3 = MathTex(r"2").next_to(brace3.get_tip(), RIGHT)
+        self.play(Write(mathoperation3))
+        self.wait()
+        mvg1 = VGroup(brace, brace2, brace3, mathoperation, mathoperation2, mathoperation3)
+        t4 = Table(
+                [
+                    ["2","2"],
+                    ["2","2"],
+                    ["2","2"]
+                ],
+                row_labels=[Text("FB"), Text("GOOG"), Text("MSFT")],
+                col_labels=[Text('Person'),Text('Sales')],
+                include_outer_lines=True
+                )
+        t4.scale(0.5).shift(4*RIGHT)
+        self.play(Transform(mvg1, t4))
+        self.wait(5)
+        self.play(Uncreate(mvg1))
+        self.wait()
+        code8 = Code(code="groupby('Company').max()", background="rectangle", language="Python", font="Monospace").shift(5*RIGHT + 3*UP).scale(0.5)
+        self.play(Transform(code2, code8))
+        self.play(Indicate(code2))
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        grptxt12 = (
+                        '<span font_family="monospace">Max() aggregation function returns the maximum value from the entries in each column for each group. It works on numerical values, as well as categorical values (as a side effect). If you only want to include numerical values, pass in numeric_only=True parameter.</span>'
+                )
+        justified12 = MarkupText(grptxt12).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle, run_time=1), Write(justified12, run_time=1))
+        self.wait(7)
+        self.play(FadeOut(bigrectangle, run_time=1), Unwrite(justified12, run_time=1))
+        self.wait()
+        brace = BraceBetweenPoints(point1, point2, direction=[1., 0., 0.])
+        self.play(Create(brace))
+        self.wait()
+        mathoperation = MathTex(r"Sarah | 350").next_to(brace.get_tip(), RIGHT)
+        self.play(Write(mathoperation))
+        self.wait()
+        brace2 = BraceBetweenPoints(point3, point4, direction=[1., 0., 0.])
+        self.play(Create(brace2))
+        self.wait()
+        mathoperation2 = MathTex(r"Sam | 200").next_to(brace2.get_tip(), RIGHT)
+        self.play(Write(mathoperation2))
+        self.wait()
+        brace3 = BraceBetweenPoints(point5, point6, direction=[1., 0., 0.])
+        self.play(Create(brace3))
+        mathoperation3 = MathTex(r"Venessa | 340").next_to(brace3.get_tip(), RIGHT)
+        self.play(Write(mathoperation3))
+        self.wait()
+        mvg1 = VGroup(brace, brace2, brace3, mathoperation, mathoperation2, mathoperation3)
+        t5 = Table(
+                [
+                    ["Sarah","350"],
+                    ["Sam","200"],
+                    ["Venessa","340"]
+                ],
+                row_labels=[Text("FB"), Text("GOOG"), Text("MSFT")],
+                col_labels=[Text('Person'),Text('Sales')],
+                include_outer_lines=True
+                )
+        t5.scale(0.5).shift(4*RIGHT)
+        self.play(Transform(mvg1, t5))
+        self.wait(5)
+        self.play(Uncreate(mvg1))
+        self.wait()
+        bigrectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_color=YELLOW, width=11, height=3)
+        grptxt13 = (
+                        '<span font_family="monospace">There are other aggregation functions as well. Please check the Pandas documentation for more info.</span>'
+                )
+        justified13 = MarkupText(grptxt13).move_to(bigrectangle.get_center()).scale_to_fit_width(10.5)
+        self.play(FadeIn(bigrectangle, run_time=1), Write(justified13, run_time=1))
+        self.wait(7)
+        self.play(FadeOut(bigrectangle, run_time=1), Unwrite(justified13, run_time=1))
+        self.wait()
